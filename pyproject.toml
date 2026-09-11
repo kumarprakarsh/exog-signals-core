@@ -31,3 +31,6 @@ include = ["exog_signals*"]
 testpaths = ["tests"]
 addopts = "-q"
 pythonpath = ["."]
+
+[tool.setuptools.package-data]
+"exog_signals" = ["data/*.json"]   # ship the JSON data in the wheel (regions/seed/registry)
