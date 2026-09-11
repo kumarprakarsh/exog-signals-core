@@ -1,0 +1,33 @@
+[project]
+name = "exog-signals-core"
+version = "0.1.0"
+description = "Shared core for the exogenous causal-signal agents: honesty model (measured/prior/unknown), region resolver, ranked source registry, store, provenance/staleness, prior builder (80%% lane), measured calibrator, impact composer, tool registry."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [{ name = "FieldAssist", email = "engineering@fieldassist.com" }]
+keywords = ["forecasting", "cpg", "festival", "weather", "causal-features", "mcp", "replenishment"]
+dependencies = []  # the core runs on the standard library only (D-EXOG-2: "anyone can use it")
+
+[project.optional-dependencies]
+store = ["duckdb>=1.0", "psycopg[binary]>=3.2"]
+data = ["polars>=1.0"]
+mcp = ["mcp>=1.0"]          # stdio MCP surface (needs Python >=3.10)
+llm = ["anthropic>=0.40"]  # research-prior builder
+http = ["fastapi>=0.115", "uvicorn>=0.30"]
+dev = ["pytest>=8", "hypothesis>=6"]
+
+[project.scripts]
+exog = "exog_signals.surfaces.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["exog_signals*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["."]

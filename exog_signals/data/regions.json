@@ -1,0 +1,39 @@
+{
+  "countries": {
+    "IN": "India",
+    "US": "United States",
+    "KE": "Kenya"
+  },
+  "subdivisions": {
+    "IN-MH": {"name": "Maharashtra", "lat": 19.75, "lon": 75.71, "tz": "Asia/Kolkata"},
+    "IN-KL": {"name": "Kerala", "lat": 10.85, "lon": 76.27, "tz": "Asia/Kolkata"},
+    "IN-KA": {"name": "Karnataka", "lat": 15.32, "lon": 75.71, "tz": "Asia/Kolkata"},
+    "IN-TN": {"name": "Tamil Nadu", "lat": 11.13, "lon": 78.66, "tz": "Asia/Kolkata"},
+    "IN-WB": {"name": "West Bengal", "lat": 22.99, "lon": 87.85, "tz": "Asia/Kolkata"},
+    "IN-DL": {"name": "Delhi", "lat": 28.70, "lon": 77.10, "tz": "Asia/Kolkata"},
+    "IN-GJ": {"name": "Gujarat", "lat": 22.26, "lon": 71.19, "tz": "Asia/Kolkata"},
+    "US-TX": {"name": "Texas", "lat": 31.00, "lon": -100.00, "tz": "America/Chicago"},
+    "US-CA": {"name": "California", "lat": 36.78, "lon": -119.42, "tz": "America/Los_Angeles"},
+    "KE-30": {"name": "Nairobi", "lat": -1.29, "lon": 36.82, "tz": "Africa/Nairobi"}
+  },
+  "aliases": {
+    "india": "IN",
+    "united states": "US",
+    "usa": "US",
+    "kenya": "KE",
+    "maharashtra": "IN-MH",
+    "mumbai": "IN-MH",
+    "kerala": "IN-KL",
+    "karnataka": "IN-KA",
+    "bengaluru": "IN-KA",
+    "bangalore": "IN-KA",
+    "tamil nadu": "IN-TN",
+    "west bengal": "IN-WB",
+    "delhi": "IN-DL",
+    "new delhi": "IN-DL",
+    "gujarat": "IN-GJ",
+    "texas": "US-TX",
+    "california": "US-CA",
+    "nairobi": "KE-30"
+  }
+}
