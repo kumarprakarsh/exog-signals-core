@@ -45,18 +45,29 @@ class ToolRegistry:
         return to_jsonable(self._handlers[name](params or {}))
 
     def handle(self, method: str, path: str, body: Optional[dict]) -> Tuple[int, dict]:
-        """Pure request handler. Path is ``/mcp/tools/<name>``; params come from the JSON body."""
+        """Pure request handler. Path is ``/mcp/tools/<name>``; params come from the JSON body.
+
+        Distinguishes the three failure modes a consumer needs to tell apart (a masked-everything-as-404 is
+        hostile to the App-API / recommendation / dashboard clients that call this): an unknown tool → 404 (with
+        the available tool list), a request missing a required field → 400 (with the field names + the schema), and
+        a handler that raises → 422 (with the error type + detail). A handler's own ``KeyError`` is no longer
+        mislabelled "unknown tool"."""
         prefix = "/mcp/tools/"
         if not path.startswith(prefix):
             return 404, {"error": f"unknown path {path!r}"}
         name = path[len(prefix):]
         if name == "":  # discovery
             return 200, {"tools": self.names(), "schemas": self.schemas()}
+        if name not in self._handlers:
+            return 404, {"error": f"unknown tool {name!r}", "available": self.names()}
+        params = body or {}
+        missing = [f for f in self._schemas.get(name, {}).get("required", []) if f not in params]
+        if missing:
+            return 400, {"error": "missing required field(s)", "fields": missing,
+                         "schema": self._schemas.get(name, {})}
         try:
-            return 200, {"result": self.call(name, body or {})}
-        except KeyError:
-            return 404, {"error": f"unknown tool {name!r}"}
-        except Exception as exc:  # noqa: BLE001 — typed domain errors surface as 422 to the caller
+            return 200, {"result": self.call(name, params)}
+        except Exception as exc:  # noqa: BLE001 — typed domain errors surface as 422 with a clear message
             return 422, {"error": type(exc).__name__, "detail": str(exc)}
 
 
